@@ -2,7 +2,7 @@
   "expo": {
     "name": "Battleship",
     "slug": "battleship-online",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     },
     "android": {
       "package": "com.snlimadev.battleship",
-      "versionCode": 1,
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000080"
@@ -29,6 +29,21 @@
       "eas": {
         "projectId": "b6cfd397-9195-4b17-9e7b-2d1d629de6d3"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "34.0.0"
+          }
+        }
+      ]
+    ]
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-4878437225305198~1478077120"
   }
 }

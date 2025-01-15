@@ -23,7 +23,6 @@ export function setupLobbyWsEvents(
 ): void {
   if (ws) {
     ws.onopen = () => {
-      setIsClientConnected(true);
       sendJsonMessage(ws, { action: 'ENTER_LOBBY' });
       showMessage({ message: 'Connected', type: 'success', icon: 'success' });
     };
@@ -46,6 +45,7 @@ export function setupLobbyWsEvents(
       const parsedMessage: IncomingMessageParams = parseJsonMessage(event);
 
       if (parsedMessage.lobbyInfo) {
+        setIsClientConnected(true);
         setLobbyInfo(parsedMessage.lobbyInfo);
       }
     };

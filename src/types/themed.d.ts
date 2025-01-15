@@ -20,11 +20,13 @@ declare module '@rneui/themed' {
     noPaddingTop?: boolean;
     bold?: boolean;
     centered?: boolean;
+    underline?: boolean;
     xxlarge?: boolean;
     large?: boolean;
     success?: boolean;
     warning?: boolean;
     danger?: boolean;
+    primary?: boolean;
     modal?: boolean;
   }
 

@@ -9,6 +9,8 @@ import { GAME_SETTINGS } from '../../config/gameConfig';
  * @param {SocketUser} player - Indicates if the player is `PLAYER_1` or `PLAYER_2`.
  * @param {GameState} playerState - The player's game state.
  * @param {GameState} opponentState - The opponent's game state.
+ * @param {React.Dispatch<React.SetStateAction<boolean>>} setIsClientConnected
+ * - The function to update the connection status of the client.
  * @param {React.Dispatch<React.SetStateAction<string>>} setRoomCode
  * - The function to update the room code.
  * @param {React.Dispatch<React.SetStateAction<GameSettings>>} setGameSettings
@@ -35,6 +37,7 @@ export function processMultiplayerMessageEvent(
   player: SocketUser,
   playerState: GameState,
   opponentState: GameState,
+  setIsClientConnected: React.Dispatch<React.SetStateAction<boolean>>,
   setRoomCode: React.Dispatch<React.SetStateAction<string>>,
   setGameSettings: React.Dispatch<React.SetStateAction<GameSettings>>,
   setHasGameStarted: React.Dispatch<React.SetStateAction<boolean>>,
@@ -48,6 +51,7 @@ export function processMultiplayerMessageEvent(
   const { roomOptions, event, moveInfo, error } = message;
 
   if (roomOptions) {
+    setIsClientConnected(true);
     setRoomCode(roomOptions.roomCode?.toString() || '');
     setGameSettings(GAME_SETTINGS[roomOptions.gameMode || 'CLASSIC']);
   } else if (event) {

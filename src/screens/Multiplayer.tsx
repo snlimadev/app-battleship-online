@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { BackHandler } from 'react-native';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WS_URL } from '../config/appConfig';
 import { GAME_SETTINGS } from '../config/gameConfig';
@@ -10,6 +11,8 @@ import { initializeGameState, initializeRoundState, validateMove } from '../util
 import { sendJsonMessage } from '../utils/online';
 import { getComputerMove, setupRandomBattleGrid, updateGameState } from '../services/game';
 import { processMultiplayerMessageEvent, sendPlayerShips, setupMultiplayerWsEvents } from '../services/online';
+
+const BANNER_ID: string = 'ca-app-pub-4878437225305198/8680951743';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Multiplayer'>;
 
@@ -34,8 +37,6 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
 
   //#region Handlers
   const handleCreateOrJoinRoom = (): void => {
-    setIsClientConnected(true);
-
     sendJsonMessage(ws, {
       action: route.params['action'],
       roomOptions: route.params['roomOptions']
@@ -113,6 +114,7 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
       player,
       playerState,
       opponentState,
+      setIsClientConnected,
       setRoomCode,
       setGameSettings,
       setHasGameStarted,
@@ -208,7 +210,19 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
   return (
     <>
       {(!hasGameStarted) ? (
-        <WaitingCard roomCode={roomCode} />
+        <>
+          <WaitingCard roomCode={roomCode} />
+
+          {(route.params['action'] === 'CREATE_ROOM' && isClientConnected) && (
+            <BannerAd
+              unitId={(__DEV__) ? TestIds.BANNER : BANNER_ID}
+              size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+              requestOptions={{
+                requestNonPersonalizedAdsOnly: true
+              }}
+            />
+          )}
+        </>
       ) : (
         <Game
           playerState={playerState}

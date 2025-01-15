@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WS_URL } from '../config/appConfig';
 import { GameSettingsModal, LoadingModal } from '../components/modals';
@@ -8,6 +9,8 @@ import { LobbyInfo } from '../components/online';
 import { initializeLobbyInfo } from '../utils/online';
 import { setupLobbyWsEvents } from '../services/online';
 import styles from '../css/styles';
+
+const BANNER_ID: string = 'ca-app-pub-4878437225305198/5042218932';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Lobby'>;
 type MultiplayerAction = RootStackParamList['Multiplayer']['action'];
@@ -66,21 +69,33 @@ export function Lobby({ navigation }: Props): JSX.Element {
   //#endregion
 
   return (
-    <View style={styles.containerView}>
-      <View style={styles.flexEndContainer}>
-        <Button onPress={() => handleOpenModal('Create Room')} noPaddingTop>
-          <Icon name='plus-circle' type='feather' /> CREATE A ROOM
-        </Button>
+    <>
+      <View style={styles.containerView}>
+        <View style={styles.flexEndContainer}>
+          <Button onPress={() => handleOpenModal('Create Room')} noPaddingTop>
+            <Icon name='plus-circle' type='feather' /> CREATE A ROOM
+          </Button>
 
-        <Button onPress={() => handleOpenModal('Join Room')}>
-          <Icon name='arrow-right-circle' type='feather' /> JOIN A ROOM
-        </Button>
+          <Button onPress={() => handleOpenModal('Join Room')}>
+            <Icon name='arrow-right-circle' type='feather' /> JOIN A ROOM
+          </Button>
+        </View>
+
+        <LobbyInfo
+          lobbyInfo={lobbyInfo}
+          handleJoinRoom={handleJoinRoom}
+        />
       </View>
 
-      <LobbyInfo
-        lobbyInfo={lobbyInfo}
-        handleJoinRoom={handleJoinRoom}
-      />
+      {(isClientConnected) && (
+        <BannerAd
+          unitId={(__DEV__) ? TestIds.BANNER : BANNER_ID}
+          size={BannerAdSize.ANCHORED_ADAPTIVE_BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true
+          }}
+        />
+      )}
 
       <GameSettingsModal
         isModalVisible={isModalVisible}
@@ -100,6 +115,6 @@ export function Lobby({ navigation }: Props): JSX.Element {
       />
 
       <LoadingModal isVisible={!isClientConnected} text='CONNECTING...' />
-    </View>
+    </>
   );
 }

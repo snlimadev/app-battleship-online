@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ScrollView, View, Linking, Pressable } from 'react-native';
+import { ScrollView, Linking, Pressable } from 'react-native';
 import { Text, Button, Icon } from '@rneui/themed';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { useFocusEffect } from '@react-navigation/native';
@@ -58,17 +58,15 @@ export function Home({ navigation }: Props): JSX.Element {
           <Icon name='question-circle-o' type='font-awesome' /> How to play
         </Button>
 
-        <View style={{ alignItems: 'center' }}>
-          <View style={[styles.flexRowContainer, { paddingTop: 10 }]}>
-            <Text noPaddingTop>If you like it, please </Text>
+        <Text centered>
+          <Text noPaddingTop>If you like it, please </Text>
 
-            <Pressable onPress={() => handleOpenURL('com.snlimadev.battleship')}>
-              <Text primary bold underline noPaddingTop>rate the app</Text>
-            </Pressable>
+          <Pressable onPress={() => handleOpenURL('com.snlimadev.battleship')}>
+            <Text primary bold underline noPaddingTop>rate the app</Text>
+          </Pressable>
 
-            <Text noPaddingTop> to help us keep improving it for you.</Text>
-          </View>
-        </View>
+          <Text noPaddingTop> to help us keep improving it for you.</Text>
+        </Text>
       </ScrollView>
 
       {(shouldShowBanner) && (

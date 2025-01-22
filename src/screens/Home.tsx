@@ -64,8 +64,20 @@ export function Home({ navigation }: Props): JSX.Element {
           <Pressable onPress={() => handleOpenURL('com.snlimadev.battleship')}>
             <Text primary bold underline noPaddingTop>rate the app</Text>
           </Pressable>
+        </Text>
 
-          <Text noPaddingTop> to help us keep improving it for you.</Text>
+        <Text centered>
+          <Text noPaddingTop>You may also like our other online games, </Text>
+
+          <Pressable onPress={() => handleOpenURL('com.snlimadev.jogodavelha')}>
+            <Text primary bold underline noPaddingTop>Tic-Tac-Toe</Text>
+          </Pressable>
+
+          <Text noPaddingTop> and </Text>
+
+          <Pressable onPress={() => handleOpenURL('com.snlimadev.rockpaperscissors')}>
+            <Text primary bold underline noPaddingTop>Rock Paper Scissors</Text>
+          </Pressable>
         </Text>
       </ScrollView>
 

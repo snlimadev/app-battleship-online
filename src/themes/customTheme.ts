@@ -5,7 +5,7 @@ import { DEFAULT_COLORS, DEFAULT_PADDING, DEFAULT_RADIUS } from '../config/appCo
 const customTheme = createTheme({
   lightColors: DEFAULT_COLORS,
 
-  darkColors: { ...DEFAULT_COLORS, primary: 'rgba(4, 55, 242, 0.75)' },
+  darkColors: { ...DEFAULT_COLORS, primary: 'rgb(4, 55, 242)' },
 
   components: {
     Text: (props, theme) => ({

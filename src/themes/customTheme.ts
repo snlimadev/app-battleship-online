@@ -1,4 +1,3 @@
-import { Appearance } from 'react-native';
 import { createTheme } from '@rneui/themed';
 import { DEFAULT_COLORS, DEFAULT_PADDING, DEFAULT_RADIUS } from '../config/appConfig';
 
@@ -115,9 +114,9 @@ const customTheme = createTheme({
     }),
   },
 
-  mode: (Appearance.getColorScheme() === 'dark') ? 'dark' : 'light',
+  mode: 'light',
 
-  icon: (Appearance.getColorScheme() === 'dark') ? 'sunny' : 'moon',
+  icon: 'moon',
 });
 
 export default customTheme;

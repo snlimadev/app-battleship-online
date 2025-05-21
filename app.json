@@ -2,7 +2,7 @@
   "expo": {
     "name": "Battleship",
     "slug": "battleship-online",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     },
     "android": {
       "package": "com.snlimadev.battleship",
-      "versionCode": 6,
+      "versionCode": 7,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000080"
@@ -36,7 +36,7 @@
         {
           "android": {
             "compileSdkVersion": 34,
-            "targetSdkVersion": 35,
+            "targetSdkVersion": 34,
             "buildToolsVersion": "34.0.0"
           }
         }

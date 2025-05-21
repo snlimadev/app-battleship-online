@@ -19,7 +19,7 @@ declare global {
   interface RoomOptions {
     isPublic?: 'Y' | 'N',
     roomCode?: number,
-    gameMode?: 'CLASSIC' | 'MOBILE'
+    gameMode?: GameMode
   }
 
   interface LobbyInfo {

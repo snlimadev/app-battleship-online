@@ -39,7 +39,7 @@ export function WaitingCard({ roomCode }: WaitingCardProps): JSX.Element {
 
         <Text selectable centered noPaddingTop>
           The room code is <Text bold>{roomCode}</Text>. Please note your session
-          will expire in 3 minutes if an opponent doesn't join the game.
+          will expire in a few minutes if an opponent doesn't join the game.
         </Text>
 
         <Button type='outline' size='sm' info onPress={handleCopy}>

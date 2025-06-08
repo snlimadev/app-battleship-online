@@ -3,13 +3,13 @@ import { sendJsonMessage } from '../../utils/online';
 /**
  * Sends the player's ships data to the WebSocket server to start the round.
  * 
- * @param {WebSocket} ws - The WebSocket connection object.
+ * @param {WebSocket | null} ws - The WebSocket connection object.
  * @param {GameState} playerState - The player's game state.
  * 
  * @returns {void} This function does not return any value.
  */
 export function sendPlayerShips(
-  ws: WebSocket,
+  ws: WebSocket | null,
   playerState: GameState
 ): void {
   const { ships } = playerState;

@@ -12,4 +12,4 @@ export const DEFAULT_PADDING: number = 10;
 
 export const DEFAULT_RADIUS: number = 10;
 
-export const WS_URL: string = 'wss://api-battleship-online.glitch.me';
+export const WS_URL: string = 'wss://api-battleship-online.onrender.com';

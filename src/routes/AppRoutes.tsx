@@ -1,4 +1,5 @@
-import { View } from 'react-native';
+import { KeyboardAvoidingView, Platform } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon, useTheme } from '@rneui/themed';
@@ -26,7 +27,10 @@ export default function AppRoutes(): JSX.Element {
 
   return (
     <NavigationContainer theme={theme}>
-      <View style={{ flex: 1, backgroundColor: theme.colors.background }}>
+      <SafeAreaView
+        style={{ flex: 1, backgroundColor: theme.colors.background }}
+        edges={['bottom']}
+      >
         <Stack.Navigator
           screenOptions={{
             headerStyle: { backgroundColor: DEFAULT_COLORS['primary'] },
@@ -66,7 +70,11 @@ export default function AppRoutes(): JSX.Element {
 
           <Stack.Screen name='How to Play' component={HowToPlay} />
         </Stack.Navigator>
-      </View>
+
+        {(Platform.OS === 'android' && Platform.Version >= 35) && (
+          <KeyboardAvoidingView behavior='padding' />
+        )}
+      </SafeAreaView>
     </NavigationContainer>
   );
 }

@@ -23,7 +23,7 @@ export function Lobby({ navigation }: Props): JSX.Element {
   const [roomCodeInput, setRoomCodeInput] = useState<string>('');
   const [isClassicMode, setIsClassicMode] = useState<boolean>(true);
   const [lobbyInfo, setLobbyInfo] = useState<LobbyInfo>(initializeLobbyInfo());
-  const ws: WebSocket = useMemo(() => new WebSocket(WS_URL), []);
+  const ws: WebSocket = useMemo<WebSocket>(() => new WebSocket(WS_URL), []);
 
   //#region Handlers
   const handleOpenModal = (title: GameSettingsModalTitle): void => {

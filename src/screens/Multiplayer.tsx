@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { BackHandler } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { BackHandler, AppState, AppStateStatus, Platform } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { WS_URL } from '../config/appConfig';
@@ -23,23 +23,41 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
   const [playerState, setPlayerState] = useState<GameState>(initializeGameState(gameSettings));
   const [opponentState, setOpponentState] = useState<GameState>(initializeGameState(gameSettings));
   const [newRoundState, setNewRoundState] = useState<RoundState>(initializeRoundState(player === 'PLAYER_1'));
-  const [roundState, setRoundState] = useState<RoundState>(newRoundState);
+  const [roundState, setRoundState] = useState<RoundState>(initializeRoundState(player === 'PLAYER_1'));
   const [hasGameStarted, setHasGameStarted] = useState<boolean>(false);
   const [isDisabledGrid, setIsDisabledGrid] = useState<boolean>(true);
   const [isDisabledButtons, setIsDisabledButtons] = useState<boolean>(true);
   const [isClientConnected, setIsClientConnected] = useState<boolean>(false);
   const [message, setMessage] = useState<IncomingMessageParams>({});
   const [roomCode, setRoomCode] = useState<string>('');
-  const [currMoveInfo, setCurrMoveInfo] = useState<MoveInfo | undefined>();
+  const [currMoveInfo, setCurrMoveInfo] = useState<MoveInfo | undefined>(undefined);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(-1);
-  const ws: WebSocket = useMemo(() => new WebSocket(WS_URL), []);
+  const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
+  const ws: React.MutableRefObject<WebSocket | null> = useRef<WebSocket | null>(null);
 
   //#region Handlers
+  const handleConnect = (): void => {
+    if (!ws.current) {
+      setIsClientConnected(false);
+      ws.current = new WebSocket(WS_URL);
+      setupMultiplayerWsEvents(ws.current, handleCreateOrJoinRoom, setMessage, navigation);
+    }
+  };
+
+  const handleDisconnect = (): void => {
+    if (ws.current) {
+      ws.current.close();
+      ws.current = null;
+    }
+  };
+
   const handleCreateOrJoinRoom = (): void => {
-    sendJsonMessage(ws, {
+    sendJsonMessage(ws.current, {
       action: route.params['action'],
-      roomOptions: route.params['roomOptions']
+      roomOptions: (route.params['action'] === 'CREATE_ROOM')
+        ? { ...route.params['roomOptions'], roomCode: parseInt(roomCode) || -1 }
+        : route.params['roomOptions']
     });
   };
 
@@ -57,7 +75,7 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
 
       if (isValid) {
         setCounter(-1);
-        sendJsonMessage(ws, { action: 'MAKE_MOVE', move: playerMove });
+        sendJsonMessage(ws.current, { action: 'MAKE_MOVE', move: playerMove });
       } else {
         setIsDisabledGrid(false);
       }
@@ -67,7 +85,7 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
   const handleComputerMove = (): void => {
     setCounter(-1);
 
-    sendJsonMessage(ws, {
+    sendJsonMessage(ws.current, {
       action: 'MAKE_MOVE',
       move: getComputerMove(gameSettings, playerState)
     });
@@ -79,7 +97,7 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
     if (roundState.isRoundOver && !isWaiting) {
       setCounter(-1);
       setIsWaiting(true);
-      sendPlayerShips(ws, playerState);
+      sendPlayerShips(ws.current, playerState);
     }
   };
 
@@ -101,12 +119,30 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
 
   //#region useEffect hooks
   useEffect(() => {
-    setupMultiplayerWsEvents(ws, handleCreateOrJoinRoom, setMessage, navigation);
-
     return () => {
-      if (ws) ws.close();
+      handleDisconnect();
     };
   }, []);
+
+  useEffect(() => {
+    if (appState === 'active') {
+      handleConnect();
+    } else if (Platform.OS === 'android' && Platform.Version >= 35) {
+      handleDisconnect();
+      setPlayerState(initializeGameState(gameSettings));
+      setOpponentState(initializeGameState(gameSettings));
+      setupRandomBattleGrid(gameSettings, setPlayerState, true);
+      setNewRoundState(initializeRoundState(player === 'PLAYER_1'));
+      setRoundState(initializeRoundState(player === 'PLAYER_1'));
+      setHasGameStarted(false);
+      setIsDisabledGrid(true);
+      setIsDisabledButtons(false);
+      setMessage({});
+      setCurrMoveInfo(undefined);
+      setIsWaiting(false);
+      setCounter(-1);
+    }
+  }, [appState]);
 
   useEffect(() => {
     processMultiplayerMessageEvent(
@@ -154,6 +190,16 @@ export function Multiplayer({ navigation, route }: Props): JSX.Element {
       BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
     };
   }, [navigation]);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      setAppState(nextAppState);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   useEffect(() => {
     let countdown: NodeJS.Timeout | undefined;

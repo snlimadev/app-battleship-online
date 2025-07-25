@@ -70,7 +70,7 @@ export function processMultiplayerMessageEvent(
 
       case 'GAME_OVER':
         showMessage({
-          message: 'Opponent left. Final score:',
+          message: 'Opponent left.\nFinal score:',
           description: `YOU ${playerState.score} x ${opponentState.score} OPP`,
           type: 'info',
           icon: 'info',

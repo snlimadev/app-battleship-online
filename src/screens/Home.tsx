@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { ScrollView, Linking, Pressable } from 'react-native';
+import { ScrollView, Linking, Pressable, View } from 'react-native';
 import { Text, Button, Icon } from '@rneui/themed';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { useFocusEffect } from '@react-navigation/native';
@@ -62,7 +62,10 @@ export function Home({ navigation }: Props): JSX.Element {
           <Text noPaddingTop>If you like it, please </Text>
 
           <Pressable onPress={() => handleOpenURL('com.snlimadev.battleship')}>
-            <Text primary bold underline noPaddingTop>rate the app</Text>
+            <View style={styles.flexRowContainer}>
+              <Icon name='star' type='feather' color='#DAA520' />
+              <Text primary bold underline noPaddingTop> rate the app</Text>
+            </View>
           </Pressable>
         </Text>
 

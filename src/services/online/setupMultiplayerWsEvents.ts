@@ -30,7 +30,7 @@ export function setupMultiplayerWsEvents(
 
     ws.onerror = () => {
       showMessage({
-        message: 'Connection to the server lost or expired',
+        message: 'Connection lost',
         description: 'Please check your internet connection and try again later.',
         type: 'danger',
         icon: 'danger',

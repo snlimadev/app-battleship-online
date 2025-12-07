@@ -43,7 +43,7 @@ export function Home({ navigation }: Props): JSX.Element {
     <>
       <ScrollView contentContainerStyle={styles.containerScrollView}>
         <Text h4 centered noPaddingTop>
-          Welcome to Battleship - Online!
+          Welcome to Battlefleet - Online!
         </Text>
 
         <Button onPress={() => setIsModalVisible(true)}>
@@ -61,7 +61,7 @@ export function Home({ navigation }: Props): JSX.Element {
         <Text centered>
           <Text noPaddingTop>If you like it, please </Text>
 
-          <Pressable onPress={() => handleOpenURL('com.snlimadev.battleship')}>
+          <Pressable onPress={() => handleOpenURL('com.snlimadev.battlefleet')}>
             <View style={styles.flexRowContainer}>
               <Icon name='star' type='feather' color='#DAA520' />
               <Text primary bold underline noPaddingTop> rate the app</Text>

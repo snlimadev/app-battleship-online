@@ -6,9 +6,9 @@ import { ScoreCard } from './ScoreCard';
 import styles from '../../css/styles';
 
 interface GameProps {
-  playerState: GameState,
-  opponentState: GameState,
-  roundState: RoundState,
+  playerState: GameState;
+  opponentState: GameState;
+  roundState: RoundState;
   opponentText: React.ComponentProps<typeof ScoreCard>['opponentText'];
   isDisabledGrid: React.ComponentProps<typeof BattleGrid>['isDisabled'];
   isDisabledButtons: boolean;

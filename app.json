@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Battleship",
-    "slug": "battleship-online",
-    "version": "1.1.2",
+    "name": "Battlefleet",
+    "slug": "battlefleet-online",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,8 +15,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.snlimadev.battleship",
-      "versionCode": 10,
+      "package": "com.snlimadev.battlefleet",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#000080"
@@ -27,7 +27,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "b6cfd397-9195-4b17-9e7b-2d1d629de6d3"
+        "projectId": "08d5af3a-d212-40f3-b8d3-ad6b46c48309"
       }
     },
     "plugins": [

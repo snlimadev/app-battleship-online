@@ -8,7 +8,7 @@ Additionally, there are two different game modes that the player can choose from
 
 The app also features a lobby screen, where players can easily create and join public or private rooms. To make that possible, the app uses a WebSocket server.
 
-Available on the Play Store: https://play.google.com/store/apps/details?id=com.snlimadev.battleship
+Available on the Play Store: https://play.google.com/store/apps/details?id=com.snlimadev.battlefleet
 
 <h2>Português</h2>
 
@@ -20,4 +20,4 @@ Além disso, há dois modos de jogo diferentes que o jogador pode escolher: `CLA
 
 O aplicativo conta também com uma tela de lobby, onde os jogadores podem facilmente criar e entrar em salas públicas ou privadas. Para tornar isso possível, o aplicativo utiliza um servidor WebSocket.
 
-Disponível na Play Store: https://play.google.com/store/apps/details?id=com.snlimadev.battleship
+Disponível na Play Store: https://play.google.com/store/apps/details?id=com.snlimadev.battlefleet

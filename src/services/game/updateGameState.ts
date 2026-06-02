@@ -28,9 +28,9 @@ export function updateGameState(
 ): void {
   const { gameColorMap } = gameSettings;
 
-  const newPlayerState: GameState = { ...playerState };
-  const newOpponentState: GameState = { ...opponentState };
-  const ships: readonly number[][][] = opponentState.ships;
+  const newPlayerState: GameState = JSON.parse(JSON.stringify(playerState));
+  const newOpponentState: GameState = JSON.parse(JSON.stringify(opponentState));
+  const ships: readonly number[][][] = newOpponentState.ships;
   const newGridColors: string[][] = newOpponentState.gridColors;
   const newHits: number[][][] = newPlayerState.hits;
   const newMisses: number[][] = newPlayerState.misses;

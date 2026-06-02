@@ -88,7 +88,7 @@ export function processMultiplayerMessageEvent(
     const shipIndex: number | undefined = currHitInfo?.shipIndex;
 
     if (currPlayer === player && shipIndex !== undefined) {
-      const newOpponentState: GameState = { ...opponentState };
+      const newOpponentState: GameState = JSON.parse(JSON.stringify(opponentState));
       const ships: number[][][] = newOpponentState.ships;
 
       for (let i: number = 0; i < ships[shipIndex].length; i++) {
